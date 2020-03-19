@@ -9,6 +9,13 @@ var logger = require('morgan');
 const mongoose = require('mongoose');
 
 var items = require('./api/items/items.controller');
+var employee = require('./api/employees/employee.controller');
+var customer = require('./api/customers/customer.controller');
+var locResponsibility = require('./api/locationResponsibilities/locationRes.controller');
+var location = require('./api/locations/location.controller');
+var natureOfDuty = require('./api/natureOfDuties/duty.controller');
+var weapon = require('./api/weapons/weapon.controller');
+var attandence = require('./api/attandences/attandence.controller');
 
 // Serve the static files from the React app
 app.use(logger('dev'));
@@ -20,6 +27,41 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(cors());
 
 // An api endpoint that returns a short list of items
+app.get('/api/getAllEmps',employee.index)
+app.post('/api/createEmp',employee.createEmployee)
+app.put('/api/updateEmp/:id',employee.updateEmployee)
+app.delete('/api/deleteEmp/:id',employee.destroy)
+
+app.get('/api/getAllCosts',customer.index)
+app.post('/api/createCos',customer.createCustomer)
+app.put('/api/updateCos/:id',customer.updateCustomer)
+app.delete('/api/deleteCos/:id',customer.destroy)
+
+app.get('/api/getAllLocReses',locResponsibility.index)
+app.post('/api/createLocRes',locResponsibility.createLocRes)
+app.put('/api/updateLocRes/:id',locResponsibility.updateLocRes)
+app.delete('/api/deleteLocRes/:id',locResponsibility.destroy)
+
+app.get('/api/getAllLocs',location.index)
+app.post('/api/createLoc',location.createLocation)
+app.put('/api/updateLoc/:id',location.updateLocation)
+app.delete('/api/deleteLoc/:id',location.destroy)
+
+app.get('/api/getAllDuties',natureOfDuty.index)
+app.post('/api/createDuty',natureOfDuty.createDuty)
+app.put('/api/updateDuty/:id',natureOfDuty.updateDuty)
+app.delete('/api/deleteDuty/:id',natureOfDuty.destroy)
+
+app.get('/api/getAllWeapons',weapon.index)
+app.post('/api/createWeapon',weapon.createWeapon)
+app.put('/api/updateWeapon/:id',weapon.updateWeapon)
+app.delete('/api/deleteWeapon/:id',weapon.destroy)
+
+app.get('/api/getAllAttans',attandence.index)
+app.post('/api/createAttan',attandence.createAttandence)
+app.put('/api/updateAttan/:id',attandence.updateAttandence)
+app.delete('/api/deleteAttan/:id',attandence.destroy)
+
 app.get('/api/getList', items.getList);
 app.post('/api/list', items.createList);
 
@@ -34,7 +76,7 @@ app.listen(port);
 console.log('App is listening on port ' + port);
 
 // Connect to database
-const string_uri = "mongodb://localhost/mydb";
+const string_uri = "mongodb://admin:admin123@ds125574.mlab.com:25574/yaldram-db";
 mongoose.connect(string_uri, { useNewUrlParser: true,useUnifiedTopology: true });
 mongoose.connection.on('error', function(err) {
 	console.error('MongoDB connection error: ' + err);
